@@ -1,0 +1,463 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EnterDateScreen renders correctly 1`] = `
+<RCTSafeAreaView
+  emulateUnlessSupported={true}
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    collapsable={false}
+    nativeID="animatedComponent"
+    style={
+      Object {
+        "backgroundColor": "#F5F5F5",
+        "borderColor": "rgba(0, 0, 0, 0.12)",
+        "borderRadius": 10,
+        "elevation": 4,
+        "flex": 1,
+        "margin": 10,
+        "shadowColor": "#4a4d4e",
+        "shadowOffset": Object {
+          "height": 3,
+          "width": 0,
+        },
+        "shadowOpacity": 5,
+        "shadowRadius": 4,
+      }
+    }
+  >
+    <View
+      accessibilityState={
+        Object {
+          "disabled": true,
+        }
+      }
+      accessible={true}
+      focusable={false}
+      onClick={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        Object {
+          "flexGrow": 1,
+          "flexShrink": 1,
+        }
+      }
+    >
+      <View
+        index={0}
+        siblings={
+          Array [
+            "View",
+            "View",
+          ]
+        }
+        style={
+          Object {
+            "alignSelf": "center",
+            "flex": 1,
+            "marginHorizontal": 10,
+            "marginVertical": 20,
+          }
+        }
+        total={3}
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#000000",
+                "fontFamily": "System",
+                "fontWeight": "400",
+              },
+              Object {
+                "textAlign": "left",
+              },
+              Array [
+                Object {
+                  "textAlign": "left",
+                },
+                Object {
+                  "color": "rgba(0, 0, 0, 0.87)",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                  "writingDirection": "ltr",
+                },
+                Array [
+                  Object {
+                    "fontSize": 24,
+                    "letterSpacing": 0,
+                    "lineHeight": 32,
+                    "marginVertical": 2,
+                  },
+                  Object {
+                    "color": "#1D3540",
+                    "fontSize": 24,
+                    "fontWeight": "600",
+                    "letterSpacing": 1,
+                    "textAlign": "center",
+                  },
+                ],
+              ],
+            ]
+          }
+        >
+          Welcome to Business Day Checker
+        </Text>
+      </View>
+      <View
+        index={1}
+        siblings={
+          Array [
+            "View",
+            "View",
+          ]
+        }
+        style={
+          Object {
+            "alignSelf": "center",
+            "flex": 3,
+            "justifyContent": "flex-start",
+            "width": 730,
+          }
+        }
+        total={3}
+      >
+        <View
+          style={
+            Object {
+              "alignSelf": "center",
+              "marginHorizontal": 10,
+            }
+          }
+        >
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#000000",
+                  "fontFamily": "System",
+                  "fontWeight": "400",
+                },
+                Object {
+                  "textAlign": "left",
+                },
+                Array [
+                  Object {
+                    "textAlign": "left",
+                  },
+                  Object {
+                    "color": "rgba(0, 0, 0, 0.87)",
+                    "fontFamily": "System",
+                    "fontWeight": "400",
+                    "writingDirection": "ltr",
+                  },
+                  Array [
+                    Object {
+                      "fontSize": 16,
+                      "letterSpacing": 0.5,
+                      "lineHeight": 24,
+                      "marginVertical": 2,
+                    },
+                    Object {
+                      "color": "#4a4d4e",
+                      "fontSize": 16,
+                      "fontWeight": "400",
+                      "letterSpacing": 1,
+                      "textAlign": "center",
+                    },
+                  ],
+                ],
+              ]
+            }
+          >
+            Choose date from below date picker
+          </Text>
+        </View>
+        <View
+          style={
+            Object {
+              "alignSelf": "center",
+              "flexDirection": "column",
+              "justifyContent": "center",
+              "left": 10,
+              "marginVertical": 5,
+              "width": 720,
+            }
+          }
+        >
+          <Text
+            style={
+              Object {
+                "color": "#4a4d4e",
+                "fontSize": 16,
+                "fontWeight": "600",
+                "paddingVertical": 5,
+              }
+            }
+          >
+            Business Date
+          </Text>
+        </View>
+        <View
+          collapsable={false}
+          nativeID="animatedComponent"
+          style={
+            Object {
+              "alignSelf": "center",
+              "backgroundColor": "#1D3540",
+              "borderColor": "transparent",
+              "borderRadius": 4,
+              "borderStyle": "solid",
+              "borderWidth": 0,
+              "elevation": 2,
+              "marginTop": 20,
+              "minWidth": 64,
+              "shadowColor": "#000000",
+              "shadowOffset": Object {
+                "height": 0.75,
+                "width": 0,
+              },
+              "shadowOpacity": 0.24,
+              "shadowRadius": 1.5,
+              "width": 700,
+            }
+          }
+        >
+          <View
+            accessibilityRole="button"
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            focusable={true}
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Array [
+                Object {
+                  "overflow": "hidden",
+                },
+                Object {
+                  "borderRadius": 4,
+                },
+              ]
+            }
+            testID="submit-button"
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  },
+                  undefined,
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "marginLeft": 12,
+                    "marginRight": -4,
+                  }
+                }
+              >
+                <Text
+                  accessibilityElementsHidden={true}
+                  allowFontScaling={false}
+                  importantForAccessibility="no-hide-descendants"
+                  pointerEvents="none"
+                  selectable={false}
+                  style={
+                    Array [
+                      Object {
+                        "color": "#ffffff",
+                        "fontSize": 16,
+                      },
+                      Array [
+                        Object {
+                          "lineHeight": 16,
+                          "transform": Array [
+                            Object {
+                              "scaleX": 1,
+                            },
+                          ],
+                        },
+                        Object {
+                          "backgroundColor": "transparent",
+                        },
+                      ],
+                      Object {
+                        "fontFamily": "Material Design Icons",
+                        "fontStyle": "normal",
+                        "fontWeight": "normal",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  󰪘
+                </Text>
+              </View>
+              <Text
+                numberOfLines={1}
+                selectable={false}
+                style={
+                  Array [
+                    Object {
+                      "color": "#000000",
+                      "fontFamily": "System",
+                      "fontWeight": "400",
+                    },
+                    Object {
+                      "textAlign": "left",
+                    },
+                    Array [
+                      Object {
+                        "letterSpacing": 1,
+                        "marginHorizontal": 16,
+                        "marginVertical": 9,
+                        "textAlign": "center",
+                      },
+                      undefined,
+                      Object {
+                        "textTransform": "uppercase",
+                      },
+                      Object {
+                        "color": "#ffffff",
+                        "fontFamily": "System",
+                        "fontWeight": "500",
+                      },
+                      Object {
+                        "fontFamily": "System",
+                        "fontWeight": "500",
+                      },
+                      undefined,
+                    ],
+                  ]
+                }
+              >
+                Check Date
+              </Text>
+            </View>
+          </View>
+        </View>
+      </View>
+      <Modal
+        animationType="none"
+        hardwareAccelerated={false}
+        onRequestClose={[Function]}
+        statusBarTranslucent={true}
+        supportedOrientations={
+          Array [
+            "landscape",
+            "portrait",
+          ]
+        }
+        transparent={true}
+        visible={false}
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "backgroundColor": "transparent",
+                "bottom": 0,
+                "flex": 1,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              },
+              Object {
+                "backgroundColor": "rgba(0, 0, 0, 0.25)",
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "bottom": 0,
+                "justifyContent": "center",
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+          >
+            <ActivityIndicator
+              color="white"
+              size="large"
+              style={
+                Array [
+                  Object {
+                    "flex": 1,
+                  },
+                  Object {},
+                ]
+              }
+            />
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "bottom": 0,
+                    "flex": 1,
+                    "justifyContent": "center",
+                    "left": 0,
+                    "position": "absolute",
+                    "right": 0,
+                    "top": 0,
+                  },
+                  Object {},
+                ]
+              }
+            >
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "fontSize": 20,
+                      "fontWeight": "bold",
+                      "height": 50,
+                      "top": 80,
+                    },
+                    Object {
+                      "color": "#E60000",
+                    },
+                  ]
+                }
+              >
+                Loading...
+              </Text>
+            </View>
+          </View>
+        </View>
+      </Modal>
+    </View>
+  </View>
+</RCTSafeAreaView>
+`;
