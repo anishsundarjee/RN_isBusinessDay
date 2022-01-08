@@ -2,15 +2,13 @@ import React from 'react'
 import { StyleSheet, Platform, SafeAreaView, View, Dimensions, TouchableOpacity, Text } from 'react-native'
 import { Headline, Card, Subheading, Button } from 'react-native-paper';
 import { showMessage } from "react-native-flash-message";
-import axios from 'axios';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import Colors from '../constants/Colors';
+import {_setDateinFormat, _setOutputDateFormat, addToDate, isWeekend, _getListOfHolidays} from '../components/businessLogic'
 
 const { width } = Dimensions.get('window');
-const ENDPOINT = 'https://date.nager.at/api/v3/publicholidays/'
-const COUNTRY = 'AU'
 
 const EnterDateScreen = ({navigation}) => {
     const [isLoading, setIsLoading] = React.useState(false);
@@ -22,142 +20,56 @@ const EnterDateScreen = ({navigation}) => {
         if(Platform.OS==='android'){
             if(showDatePicker){
                 return (
-                        <DateTimePicker
-                            value={date}
-                            mode="date"
-                            display="default"
-                            maximumDate={new Date(2050, 0, 1)}
-                            minimumDate={new Date(1970, 0, 2)}
-                            onChange={ async (e, d) => {
-                                setShowDatePicker(false);
-                                if(e.type == "set") {
-                                    setDate(d);
-                                    setDisplayDate(d.toDateString())
-                                }
-                            }}
-                            style={{ backgroundColor: 'white' }}
-                        />
+                    <DateTimePicker
+                        testID='android-datePicker'
+                        value={date}
+                        mode="date"
+                        display="default"
+                        maximumDate={new Date(2050, 0, 1)}
+                        minimumDate={new Date(1970, 0, 2)}
+                        onChange={ async (e, d) => {
+                            setShowDatePicker(false);
+                            if(e.type == "set") {
+                                setDate(d);
+                                setDisplayDate(d.toDateString())
+                            }
+                        }}
+                        style={{ backgroundColor: 'white' }}
+                    />
                 );
             } else return null;
         }
     }
 
-    const isWeekend = (input) => {
-        try {
-            let checkDate = new Date(input);
-            if(checkDate.getDay() === 6) {
-                checkDate = checkDate.setDate(checkDate.getDate() + 2);
-            }
-            else if(checkDate.getDay() === 0) {
-                checkDate = checkDate.setDate(checkDate.getDate() + 1);
-            }
-            else {
-                console.log('check :',checkDate);
-            }
-            return new Date(checkDate);
-        } catch (error) {
-            console.log('Error occured checking date for weekend',error)
-        }
-    }
-
-    const addToDate = (input) => {
-        try {
-            let checkDate = new Date(input);
-            if(checkDate.getDay() === 6) { //saturday
-                checkDate = checkDate.setDate(checkDate.getDate() + 2);
-            }
-            else if(checkDate.getDay() === 5) { //friday
-                checkDate = checkDate.setDate(checkDate.getDate() + 3);
-            }
-            else { //other weekdays or sunday
-                checkDate = checkDate.setDate(checkDate.getDate() + 1);
-            }
-            console.log('updated date is : ',new Date(checkDate));
-            return new Date(checkDate);
-        } catch (error) {
-            console.log('Error occured checking date for weekend',error)
-        }
-    }
-
-    const _getListOfHolidays = async (input) => {
-        try {
-            let checkDate = input;
-            const year = checkDate.getFullYear();
-            let res = null;
-            const URL = `${ENDPOINT}${year}/${COUNTRY}`;
-            await axios.get(URL,{ timeout:5000,
-                headers : {
-                'Accept': 'application/json',
-                'Content-Type' : 'application/json'
-            }})
-            .then(response => {
-                res = response;
-            }).catch(error => {
-                res = error.response.status;
-            });
-            return res;
-        } catch (error) {
-            console.log('Error checking for holiday from remote',error);
-            showMessage({
-                message: "No Network",
-                description: "Need network connectivity to work",
-                type: "custom",
-                icon: "custom",
-                floating: true,
-                duration: 3000
-            });
-        }
-    }
-
-    const _setDateinFormat = (input) => {
-        let currentDayOfMonth = input.getDate();
-        currentDayOfMonth < 9 ? currentDayOfMonth = `0${currentDayOfMonth}` : currentDayOfMonth
-
-        let currentMonth = input.getMonth() + 1; // note! January is 0, not 1
-        currentMonth < 10 ? currentMonth = `0${currentMonth}` : currentMonth
-
-        const currentYear = input.getFullYear();
-
-        return new Date(currentYear + "-" + currentMonth + "-" + currentDayOfMonth);
-    }
-
-    const _setOutputDateFormat = (input) => {
-        const currentDayOfMonth = input.getDate();
-        const currentMonth = input.getMonth() + 1; // note! January is 0, not 1
-        const currentYear = input.getFullYear();
-
-        return currentYear + "-" + currentMonth + "-" + currentDayOfMonth
-    }
-
-    const _checkDate = async () => {
+    const _checkDate = React.useCallback(async ()=>{
         try {
             const checkDate = date;
-            let weekday = isWeekend(checkDate);
+            const weekday = isWeekend(checkDate);
             let dateCheck = _setDateinFormat(weekday);
-            let holidayOutput = await _getListOfHolidays(weekday);
+            let holidayOutput = await _getListOfHolidays(weekday.getFullYear());
             let businessDay = null;
             if(holidayOutput.status === 200) {
                 holidayOutput.data.map((obj, index) => {
                     let output = Math.abs(new Date(obj.date)) - Math.abs(dateCheck);
-                    if(output === 0) {
-                        dateCheck = addToDate(dateCheck);  
-                        if(index === holidayOutput.data.length - 1) {
+                    if(output === 0) { //chosen date is a holiday
+                        dateCheck = addToDate(dateCheck); //check for next date available
+                        if(index === holidayOutput.data.length - 1) { //if no more holidays left make current dateCheck the next business day
                             businessDay = dateCheck;
                         }
                     }
-                    else if(output < 0) {
-                        if(index === holidayOutput.data.length - 1) {
+                    else if(output < 0) { //these dates have past
+                        if(index === holidayOutput.data.length - 1) { 
                             businessDay = dateCheck;
                         }
                     }
-                    else {
+                    else { //if has no holidays then current dateCheck is a business day
                         businessDay = dateCheck;
                     }
                     // console.log('here we go ::',output, new Date(obj.date), dateCheck, index);
                 });
-            } else if(holidayOutput.status === 204){
+            } else if(holidayOutput.status === 204){ // if there is no data for the current country, we take dateCheck as business day
                 businessDay = dateCheck;
-            } else {
+            } else { //something was wrong with the data that was input
                 showMessage({
                     message: "Something went wrong",
                     description: "Invalid data was input.",
@@ -166,11 +78,13 @@ const EnterDateScreen = ({navigation}) => {
                     floating: true,
                 });
             }
-            navigation.navigate('ViewOutputScreen',{businessDay: _setOutputDateFormat(businessDay)});
+            if(businessDay !== null || businessDay !== undefined) {
+                navigation.navigate('ViewOutputScreen',{businessDay: _setOutputDateFormat(businessDay)});
+            }
         } catch (error) {
             console.log('Error occured finding business date',error);
         }
-    }
+    },[date]);
 
     const validateBusinessDate = () => {
         try {
@@ -178,10 +92,10 @@ const EnterDateScreen = ({navigation}) => {
             if (Object.prototype.toString.call(date) === "[object Date]") {
                 // it is a date
                 _checkDate();
-                if (isNaN(date.getTime())) {
+                if(isNaN(date.getTime())) {
                     // date is not valid
                     showMessage({
-                        message: "Invalid Input",
+                        message: "Invalid Date",
                         description: "Invalid data was input.",
                         type: "danger",
                         icon: "danger",
@@ -226,6 +140,7 @@ const EnterDateScreen = ({navigation}) => {
                         <Text style={styles.DatePickerLableStyle}>Business Date</Text>
                         { Platform.OS == "ios" ? (
                             <DateTimePicker
+                                testID='ios-datePicker'
                                 placeholderText="Enter date"
                                 value={date}
                                 mode="date"
@@ -243,6 +158,7 @@ const EnterDateScreen = ({navigation}) => {
                             <TouchableOpacity 
                                 onPress={()=>setShowDatePicker(true)}
                                 style={styles.DatePickerButtonStyle}
+                                testID='android-datepickerViewButton'
                             >
                                 <Ionicons name="calendar" size={28} color={Colors.PRIMARY_COLOR} style={{marginHorizontal: 10}}/>
                                 <Text style={styles.DatePickerTextStyle}>
@@ -252,6 +168,7 @@ const EnterDateScreen = ({navigation}) => {
                         )}
                     </View>
                     <Button
+                        testID='submit-button'
                         icon="briefcase-edit"
                         mode="contained"
                         onPress={() => validateBusinessDate()}
